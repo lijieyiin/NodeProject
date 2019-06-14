@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title> hAdmin- 主页</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <!-- 富文本编辑器 -->
+    <link href="/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <!-- MarkDown编辑器 -->
+    <link rel="stylesheet" type="text/css" href="/css/plugins/markdown/bootstrap-markdown.min.css" />
+    <!-- 自定义样式 -->
+    <style>
+    .overHidden{
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    #lunbo{
+        width: 800px;
+        height: 200px;
+        margin: 0 auto;
+        background-color: #fff;
+        overflow: hidden;
+        position: relative;
+    }
+    #lunbo .left{
+        display: block;
+        width:20px;
+        height: 50px;
+        background-color: #ccc;
+        position: absolute;
+        left: 0px;
+        top: 75px;
+        font-size: 50px;
+    }
+    #lunbo .right{
+        display: block;
+        width:20px;
+        height: 50px;
+        background-color: #ccc;
+        position: absolute;
+        right: 0px;
+        top: 75px;
+        font-size: 50px;
+    }
+    #lunbo .lunbo_pic{
+        position: absolute;
+        height: 200px;
+        width: 1800px;
+    }
+    #lunbo .lunbo_pic a{
+        display: inline-block;
+        box-sizing: border-box;
+    }
+    #lunbo img{
+        width: 200px;
+        height: 200px;
+        display: block;
+        float: left;
+        background-color: red;
+    }
+    #lunbo .lunbo_active{
+        border: 3px solid red;
+    }
+    .movieName{
+        color:black;
+    }
+    .movieScore{
+        padding-left: 10px; 
+        color:orange;
+    }
+    .movieInfo{
+        font-size: 16px; 
+        color: black; 
+        padding-right: 10px;
+    }
+    #btn_fenye .btn_color{
+        color: #F03D3D;
+        font-weight: bold;
+    }
+    </style>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <%- include("navbar.html")%>
+        <!--左侧导航结束-->
+        
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <!-- 头部导航 -->
+            <%- include("topNavbar.html")%>
+            <!-- 头部导航end -->
+
+            <div class="row J_mainContent" id="content-main">
+                <div class="full-height-scroll">

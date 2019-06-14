@@ -1,0 +1,147 @@
+<%- include("header.html")%>
+<div class="ibox">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="m-b-md">
+                    <!-- <a href="project_detail.html#" class="btn btn-white btn-xs pull-right">编辑项目</a> -->
+                    <h2><%=data.cinemaName%></h2>
+                </div>
+                <dl class="dl-horizontal">
+                    <dt>地址：</dt>
+                    <dd><%=data.cinemaAddress%>
+                    </dd>
+                    <dt>电话：</dt>
+                    <dd><%=data.cinemaTel%>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div id="lunbo">
+            <div class="lunbo_pic">
+                <%for(var i = 0; i < data.movieImg.length; i++){%>
+                    <a href="jacascript:;" data-id='<%=i%>' class="<%=i==0?'lunbo_active':''%> "><img src="<%=data.movieImg[i]%>" alt=""></a>
+                <%}%>    
+            </div>
+            <i class="left pic_left fa fa fa-angle-left"></i>
+            <i class="right pic_right fa fa fa-angle-right"></i>
+        </div>
+
+        <input type="hidden" id="cinemaId" value="<%=data.cinemaId%>">
+        <div class="row m-t-sm">
+            <div class="col-sm-12">
+                <div class="panel blank-panel">
+                    <div class="panel-heading">
+                       <div style="height: 70px;line-height:30px;" id="newInfos">
+                           <div style="font-size: 20px;">
+                               <span class='movieName'><%=data.movieName[0]%></span>
+                               <span class='movieScore'><%=data.movieScore[0]%><%=parseInt(data.movieScore[0])>11?'人想看':'分'%></span>
+                           </div>
+                           <div>
+                               时长：<span class="movieInfo"><%=data.movieTime[0]%></span>
+                               类型：<span class="movieInfo"><%=data.movieType[0]%></span>
+                               主演：<span class="movieInfo"><%=data.movieActor[0]%></span>
+                           </div>
+                       </div>
+
+                        <div class="panel-options">
+                            <ul class="nav nav-tabs" id="movieShow">
+                                <%for(var i = 0; i < data.movieShow[0].length; i++){%>
+                                    <li class="<%=i==0?'active':''%>"><a href="project_detail.html#tab-2" data-toggle="tab"><%=data.movieShow[0][i]%></a></li>
+                                <%}%>                                
+                               
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab-2">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>放映时间</th>
+                                            <th>语言版本</th>
+                                            <th>放映厅</th>
+                                            <th>售价（元）</th>
+                                            <!-- <th>说明</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%for(var i = 0; i < data.movieWatchTime.length; i++){%>
+                                            <tr>
+                                                <td>
+                                                    <p style="color: black;font-weight: bold; font-size:16px;"><%=data.movieWatchTime[i].beginTime%></p>
+                                                    <p style="color: #999999; font-size:10px;"><%=data.movieWatchTime[i].endTime%></p>
+                                                </td>
+                                                <td><%=data.movieWatchTime[i].language%></td>
+                                                <td><%=data.movieWatchTime[i].hall%></td>
+                                                <td style="color: #F03D3D;">￥<%=data.movieWatchTime[i].price%></td>
+                                            </tr>
+                                        <%}%>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("footer.html")%>
+<script>
+  $(function(){
+      $('.lunbo_pic').on('click','a',function(event){
+          event.preventDefault();
+          var _this = $(this)
+          _this.siblings('a').removeClass('lunbo_active')
+          _this.addClass('lunbo_active')
+            var index = _this.data('id')
+          //ajax
+          $.ajax({
+              url:'/admin/cinemas/findMoviesInfo',
+              dataType:'json',
+              data:{
+                  index:index,
+                  cinemaId:$('#cinemaId').val()
+              },
+              success:function(result){
+                  var data= result.data;
+                  var index = result.index;
+                  $('#newInfos').children().remove();
+                  $('#movieShow').children().remove();
+                  var msg = parseInt(data.movieScore[index]) > 11?'人想看':'分';
+                  var str = '';
+                  str += '<div style="font-size: 20px;">';
+                  str += '<span class="movieName">'+data.movieName[index]+'</span>';
+                  str += '<span class="movieScore">'+data.movieScore[index]+msg+'</span>';
+                  str += '</div>';
+                  str += '<div>';
+                  str += '时长：<span class="movieInfo">'+data.movieTime[index]+'</span>';
+                  str += '类型：<span class="movieInfo">'+data.movieType[index]+'</span>';
+                  str += '主演：<span class="movieInfo">'+data.movieActor[index]+'</span>';
+                  str += '</div>';
+                  $('#newInfos').append(str);
+
+                 var str2 = "";
+                 for(var i = 0; i < data.movieShow[index].length; i++){
+                     if(data.movieShow[index][i] !=''){
+                         if(i==0 || data.movieShow[index][i-1]==""){
+                             str2 += '<li class="active"><a href="project_detail.html#tab-2" data-toggle="tab">'+data.movieShow[index][i]+'</a></li>';
+                         }else{
+                             str2 += '<li class=""><a href="project_detail.html#tab-2" data-toggle="tab">'+data.movieShow[index][i]+'</a></li>';
+                         }
+                     }
+                 }
+                 $('#movieShow').append(str2);
+              }
+          })
+      })
+      
+  })
+</script>

@@ -1,0 +1,51 @@
+<%- include("header.html")%>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>分类列表</h2>
+
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+            <a href="/admin/category/add" class="btn btn-success">添加数据</a>
+        </div>
+    </div>
+</div>
+<div class="ibox float-e-margins">
+
+    <div class="ibox-content">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%if(data.length == 0){%>
+                没有数据
+                <%}%>
+
+                <% for(var i = 0; i < data.length; i++){%>
+                <tr>
+                    <td><%=i+no%></td>
+                    <td><%=data[i].username%></td>
+                    <td>
+                        <a href="/admin/category/del?id=<%=data[i]._id%>" class="btn btn-danger">删除</a>
+                    </td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+            <!-- 分页按钮 -->
+            <div class="btn-group">
+                <%for(var i = 0; i < num; i++){%>
+                <a href="/admin/category?page=<%=i%>" class="btn btn-white"><%=i+1%></a>
+                <%}%>
+            </div>
+            <!-- 分页按钮end -->
+        </div>
+    </div>
+
+<%- include("footer.html")%>

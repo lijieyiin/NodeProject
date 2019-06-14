@@ -1,0 +1,164 @@
+<%- include("header.html")%>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>修改数据</h2>
+    </div>
+</div>
+<!-- 表单    -->
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <form action="/admin/goods/update" method="post" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">标题</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="title" value="<%=data.title%>">
+                    <input type="hidden" name="id" value="<%=data.id%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">地址</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="address" value="<%=data.address%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">价格</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="price" value="<%=data.price%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">旧价格</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="oldPrice" value="<%=data.oldPrice%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">收藏</label>
+                <div class="col-sm-10">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" checked="" value="<%=data.isCollect?'true':'false'%>"
+                                id="optionsRadios1" name="isCollect">收藏</label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" value="<%=data.isCollect?'true':'false'%>" id="optionsRadios2"
+                                name="isCollect">未收藏</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">简介</label>
+                <div class="col-sm-10">
+                    <textarea name="description" id="" data-provide="markdown" cols="30" rows="5"><%=data.description%></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">内容</label>
+                <div class="col-sm-10">
+                    <textarea name="content" id="" class="summernote" cols="30" rows="5"><%=data.content%></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">缩略图</label>
+                <div class="col-sm-10">
+                    <input type="hidden" id="oldThumbnail" value="<%=data.thumbnail%>">
+                    <input type="file" id="thumbnail">
+                    <input type="hidden" name="thumbnail" value="<%=data.thumbnail%>">
+                    <img src="<%=data.thumbnail%>" alt="" width="200" height="200">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">多图片上传</label>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <input type="file" id="imglist" class="pull-left">
+                        <font color="red" class="pull-left">双击删除图片</font>
+                    </div>
+                    <div class="imglist clearfix">
+                        <% for(var i = 0; i < data.imgs.length;i++){%>
+                        <p class="pull-left">
+                            <input type="hidden" name="imgs" value="<%=data.imgs[i]%>">
+                            <img src="<%=data.imgs[i]%>" alt="" width="200" height="200">
+                        </p>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <button class="btn btn-success" type="submit">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include("footer.html")%>
+<script>
+    $(function () {
+        //原来的图片
+        var oldThumbnail = $("#oldThumbnail").val();
+        $("#thumbnail").change(function () {
+            var file = $(this)[0];//jq=>js
+            var formData = new FormData();
+            formData.append("file", file.files[0])
+            formData.append("oldThumbnail", oldThumbnail)
+            var _this = $(this);
+            $.ajax({
+                url: "/admin/goods/upload",
+                type: "post",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    //图片提交成功，提交成功图片路径
+                    oldThumbnail = data.url
+                    _this.next().val(data.url).next().attr("src", data.url)
+                }
+            })
+        })
+
+        //多图片上传
+        $("#imglist").change(function () {
+            var file = $(this)[0];//jq=>js
+            var formData = new FormData();
+            formData.append("file", file.files[0])
+            var _this = $(this);
+            $.ajax({
+                url: "/admin/goods/upload",
+                type: "post",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    //图片提交成功，提交成功图片路径
+                    var str = '';
+                    str += '<p class="pull-left">';
+                    str += '<input type="hidden" name="imgs" value="' + data.url + '">';
+                    str += '<img src="' + data.url + '" alt="" width="200" height="200">';
+                    str += '</p>';
+                    $(".imglist").append(str)
+                }
+            })
+        })
+        //双击删除图片
+        $(".imglist").on('dblclick', 'p', function () {
+            var url = $(this).find("input").val();
+            var _this = $(this)
+            $.ajax({
+                url: "/admin/goods/deleteImg",
+                type: 'post',
+                data: { "url": url },
+                success: function (result) {
+                    if (result.data == "1") {
+                        _this.remove();
+                    }
+                }
+            })
+        })
+    })
+</script>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title> - 登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+    </script>
+
+</head>
+
+<body class="signin">
+    <div class="signinpanel">
+        <div class="row">
+            <div class="col-sm-12">
+                <form action="login" method="post" id="form" >
+                    <h4 class="no-margins">后台登录：</h4>
+                    <input type="text" class="form-control uname" name="username" value="admin" placeholder="用户名" />
+                    <input type="password" class="form-control pword m-b" name="password" value="123123" placeholder="密码" />
+                    <button class="btn btn-success btn-block">登录</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.validate.min.js"></script>
+    <script>
+    $().ready(function () {
+            $("#form").validate({
+                rules: {
+                    username: "required",
+                    password: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 12
+                    }
+                },
+                messages: {
+                    username: "用户名不能为空",
+                    password: {
+                        required: "不能为空",
+                        minlength: '密码最少为6位',
+                        maxlength: '密码最多为12位'
+                    }
+                }
+            });
+    });
+    </script>
+</body>
+
+</html>

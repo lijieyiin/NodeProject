@@ -1,0 +1,76 @@
+<%- include("header.html")%>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>电影列表</h2>
+
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action pull-right">
+            <a href="/admin/movies/add" class="btn btn-success">添加数据</a>
+        </div>
+        
+    </div>
+    
+</div>
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="col-sm-3 pull-right">
+            <form action="/admin/movies" method="GET">
+                <div class="input-group">
+                    <input type="text" placeholder="请输入关键词" value="<%=search_text%>" name="search_text" class="input-sm form-control">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-sm btn-success"> 搜索</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>NO.</th>
+                    <th>电影ID</th>
+                    <th>图片</th>
+                    <th>名称</th>
+                    <th>别称</th>
+                    <th>类型</th>
+                    <th>片长</th>
+                    <th>上映时间</th>
+                    <th>评分</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%if(data.length == 0){%>
+                没有数据
+                <%}%>
+
+                <% for(var i = 0; i < data.length; i++){%>
+                <tr>
+                    <td><%=no+i%></td>
+                    <td><%=data[i].movieId%></td>
+                    <td><img src="<%=data[i].img%>" alt="" width="50" height="50"></td>
+                    <td><%=data[i].title%></td>
+                    <td><%=data[i].nailName%></td>
+                    <td><%=data[i].type%></td>
+                    <td><%=data[i].totalTime%></td>
+                    <td><%=data[i].date%></td>
+
+                    <td><%=data[i].score%></td>
+                    <td><a href="/admin/movies/del?id=<%=data[i]._id%>" class="btn btn-danger">删除</a></td>
+                    <td><a href="/admin/movies/update?id=<%=data[i]._id%>" class="btn btn-warning">详情</a></td>
+                </tr>
+                <%}%>
+            </tbody>
+        </table>
+        <!-- 分页按钮 -->
+        <div class="btn-group">
+            <%for(var i = 0; i < num; i++){%>
+                <a href="/admin/movies?page=<%=i%>&search_text=<%=search_text%>" class="btn btn-white"><%=i+1%></a>
+                <%}%>
+        </div>  
+       
+    </div>
+</div>
+
+<%- include("footer.html")%>

@@ -1,0 +1,106 @@
+<%- include("header.html")%>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>修改数据</h2>
+    </div>
+</div>
+<!-- 表单    -->
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <form action="/admin/movies/update" method="post" class="form-horizontal">
+            <input type="hidden" name="id" value="<%=data._id%>">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">电影名称</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="title" value="<%=data.title%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">电影别称</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="nailName" value="<%=data.nailName%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">图片</label>
+                <div class="col-sm-10">
+                    <input type="hidden" id="oldimg" value="<%=data.img%>">
+                    <input type="file" id="img">
+                    <input type="hidden" name="img" value="<%=data.img%>">
+                    <img src="<%=data.img%>" alt="" width="200" height="200">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">类型</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="type" value="<%=data.type%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">国家</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="country" value="<%=data.country%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">电影评分</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="score" value="<%=data.score%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">片长</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="totalTime" value="<%=data.totalTime%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">上映时间</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="date" value="<%=data.date%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">简介</label>
+                <div class="col-sm-10">
+                    <textarea name="content" id="" data-provide="markdown" cols="30"
+                        rows="5"><%=data.content%></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <button class="btn btn-success" type="submit">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include("footer.html")%>
+
+<script>
+    $(function () {
+        //原来的图片
+        var oldimg = $("#oldimg").val();
+        $("#img").change(function () {
+            var file = $(this)[0];//jq=>js
+            var formData = new FormData();
+            formData.append("file", file.files[0])
+            formData.append("oldimg", oldimg)
+            var _this = $(this);
+            $.ajax({
+                url: "/admin/movies/upload",
+                type: "post",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    //图片提交成功，提交成功图片路径
+                    oldimg = data.url
+                    _this.next().val(data.url).next().attr("src", data.url)
+                }
+            })
+        })
+    })
+</script>

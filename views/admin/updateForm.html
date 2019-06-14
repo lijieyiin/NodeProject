@@ -1,0 +1,41 @@
+<div id="update-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="">
+                        <h3 class="m-t-none m-b">修改信息</h3>
+                        <form role="form" action="/admin/category/update" method="post" id="updateForm">
+                            <div class="form-group" style="display: none;">
+                                <label>ID</label>
+                                <input type="text" name="_id" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>姓名</label>
+                                <input type="text" required placeholder="请输入用户名" name="username" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>年龄</label>
+                                <input type="text" required placeholder="请输入年龄" name="age" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>学校</label>
+                                <input type="text" required placeholder="请输入学校" name="school" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>专业</label>
+                                <input type="text" required placeholder="请输入专业" name="major" class="form-control">
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                    type="submit"><strong>提交</strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<%- include("header.html")%>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>歌手列表</h2>
+
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+            <!-- <a href="#" class="btn btn-success">添加数据</a> -->
+        </div>
+    </div>
+</div>
+<div class="ibox float-e-margins">
+
+    <div class="ibox-content">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>歌手ID</th>
+                    <th>图片</th>
+                    <th>歌手名称</th>
+                    <th>性别</th>
+                    <th>国籍</th>
+                    <th>歌曲数目</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%if(data.length == 0){%>
+                <tr>
+                    <td class="text-center"> 没有数据</td>
+                </tr>
+
+                <%}%>
+
+                <% for(var i = 0; i < data.length; i++){%>
+                <tr>
+                    <td><%=data[i].artist_id%></td>
+                    <td>
+                        <img src="<%=data[i].avatar_small%>" alt="">
+                    </td>
+                    <td><%=data[i].name%></td>
+                    <%if(data[i].gender == "0"){%>
+                    <td>男</td>
+                    <%}else if(data[i].gender == "1"){%>
+                    <td>女</td>
+                    <%}else{%>
+                    <td>组合</td>
+                    <%}%>    
+                    <td><%=data[i].country%></td>
+                    <td><%=data[i].songs_total%></td>
+                    <td>
+                        <a href="/admin/singer/del?id=<%=data[i].artist_id%>" class="btn btn-danger">删除</a>
+                    </td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+            <!-- 分页按钮 -->
+            <div class="btn-group">
+                    <!-- <button type="button" class="btn btn-white"><i class="fa fa-chevron-left"></i>
+                    </button> -->
+                <%for(var i = 0; i < num; i++){%>
+                <a href="/admin/singer?page=<%=i%>" class="btn btn-white"><%=i+1%></a>
+                <%}%>
+                <!-- <button type="button" class="btn btn-white"><i class="fa fa-chevron-right"></i>
+                </button> -->
+            </div>
+            <!-- 分页按钮end -->
+        </div>
+    </div>
+
+<%- include("footer.html")%>

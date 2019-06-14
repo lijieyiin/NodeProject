@@ -1,0 +1,62 @@
+<%- include("header.html")%>
+
+    <div class="col-sm-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>信息系统</h5>
+                <a data-toggle="modal" style="float: right" id="addBtn" class="btn btn-success" href="#add-form">添加</a>
+                    <!-- 添加页面 -->
+                    <%- include("addForm.html")%>
+                    <!-- 添加页面 -->
+                </div>
+            <div class="ibox-content">
+
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">姓名</th>
+                            <th class="text-center">年龄</th>
+                            <th class="text-center">学校</th>
+                            <th class="text-center">专业</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%for(var i = 0; i < result.length; i++){%>
+                        <tr class="tr_info">
+                            <td><%=result[i]._id%></td>
+                            <td><%=result[i].username%></td>
+                            <td><%=result[i].age%></td>
+                            <td><%=result[i].school%></td>
+                            <td><%=result[i].major%></td>
+                            <td>
+                                <a href="/admin/category/del?id=<%=result[i]._id%>"><button class="btn-danger">删除</button></a>
+                                <a data-toggle="modal"  href="#update-form"><button data-id='<%=result[i]._id%>' class="btn-warning" >修改</button></a>
+                            </td>
+                        </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
+                     <!-- 修改页面 -->
+                     <%- include("updateForm.html")%>
+                     <!-- 修改页面 -->
+                </div>
+            </div>
+        </div>
+    
+<%- include("footer.html")%>
+    <script>
+        $('tbody').on('click','.btn-warning',function(){
+            var _this = $(this);
+            var index = _this.closest('.tr_info').children()
+            
+            $('#updateForm input[name=_id]').val(index.eq(0).html())
+            $('#updateForm input[name=username]').val(index.eq(1).html())
+            $('#updateForm input[name=age]').val(index.eq(2).html())
+            $('#updateForm input[name=school]').val(index.eq(3).html())
+            $('#updateForm input[name=major]').val(index.eq(4).html())
+
+        }) 
+
+    </script>

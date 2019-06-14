@@ -1,0 +1,80 @@
+<%- include("header.html")%>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>电影列表</h2>
+
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+            <!-- <a href="/admin/goods/add" class="btn btn-success">添加数据</a> -->
+        </div>
+
+    </div>
+
+</div>
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="col-sm-3 pull-right">
+            <form action="/admin/cinemas" method="GET">
+                <div class="input-group">
+                    <input type="text" placeholder="请输入关键词" value="<%=search_text1%>" name="search_text1" class="input-sm form-control">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-sm btn-success"> 搜索</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        <table class="table table-hover" style="table-layout: fixed;width: 100%">
+            <thead>
+                <tr>
+                    <th>NO.</th>
+                    <th>电影院ID</th>
+                    <th>图片</th>
+                    <th>影院名</th>
+                    <th>地址</th>
+                    <th>电话</th>
+                    <th>3D眼镜收费</th>
+                    <th>儿童优惠</th>
+                    <th>可停车</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%if(data.length == 0){%>
+                没有数据
+                <%}%>
+
+                <% for(var i = 0; i < data.length; i++){%>
+                <tr>
+                    <td><%=no+i%></td>
+                    <td class="overHidden"><%=data[i].cinemaId%></td>
+                    <td class="overHidden"><img src="<%=data[i].img%>" alt="" width="50" height="50"></td>
+                    <td class="overHidden"><%=data[i].name%></td>
+                    <td class="overHidden"><%=data[i].address%></td>
+                    <td class="overHidden"><%=data[i].tel%></td>
+                    <td class="overHidden"><%=data[i].glasses%></td>
+                    <td class="overHidden"><%=data[i].children%></td>
+                    <td class="overHidden"><%=data[i].carParking%></td>
+                    <td><a href="/admin/cinemas/del?id=<%=data[i]._id%>" class="btn btn-danger">删除</a></td>
+                    <td><a href="/admin/cinemas/detail?cinemaId=<%=data[i].cinemaId%>" class="btn btn-warning">详情</a></td>
+                </tr>
+                <%}%>
+            </tbody>
+        </table>
+        <!-- 分页按钮 -->
+        <div class="btn-group" id="btn_fenye">
+            <div>
+            <%for(var i = 0; i < num; i++){%>
+                <a href="/admin/cinemas?page=<%=i%>&search_text1=<%=search_text1%>" class="btn btn-white"><%=i+1%></a>
+                <%}%>
+            </div>
+        </div>  
+       
+    </div>
+</div>
+
+<%- include("footer.html")%>
+<script>
+ 
+</script>

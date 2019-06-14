@@ -1,0 +1,65 @@
+</div>
+</div>
+</div>
+<!--右侧部分结束-->
+</div>
+
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/js/plugins/layer/layer.min.js"></script>
+
+<!-- 自定义js -->
+<script src="/js/hAdmin.js?v=4.1.0"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+<!-- 第三方插件 -->
+<script src="/js/plugins/pace/pace.min.js"></script>
+<!-- SUMMERNOTE -->
+<script src="/js/plugins/summernote/summernote.min.js"></script>
+<script src="/js/plugins/summernote/summernote-zh-CN.js"></script>
+<!-- simditor -->
+<script type="text/javascript" src="/js/plugins/markdown/markdown.js"></script>
+<script type="text/javascript" src="/js/plugins/markdown/to-markdown.js"></script>
+<script type="text/javascript" src="/js/plugins/markdown/bootstrap-markdown.js"></script>
+<script type="text/javascript" src="/js/plugins/markdown/bootstrap-markdown.zh.js"></script>
+
+<script>
+    // 富文本编辑器
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            lang: 'zh-CN'
+        });
+    });
+</script>
+<script>
+    // 轮播图
+    // $(function () {
+        var lunbo_width = $('#lunbo').width();//800
+        var lunbo_pic_width = $('.lunbo_pic').width();//1800
+        var left = 0;
+        var index = 0;
+        $('#lunbo .pic_left').click(function(event) {
+            event.preventDefault();
+            if(left >= -1230){
+                left = left - 200 - 5
+                $('.lunbo_pic').css('left',left+'px')
+            // }else{
+                // index = 1;
+            }
+        })
+        $('#lunbo .pic_right').click(function(event) {
+            event.preventDefault();
+            if(left != 0){
+                left = left + 200 + 5
+                $('.lunbo_pic').css('left',left+'px')
+            }
+            
+        })
+    // })
+</script>
+</body>
+
+</html>
